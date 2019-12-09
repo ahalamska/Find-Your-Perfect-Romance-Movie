@@ -1,0 +1,546 @@
+package si.movie
+
+import si.movie.UserInterface
+import static java.util.Arrays.asList;
+
+rule "init"
+    when
+    then
+    QuestionManager.KIE_RUNTIME = kcontext.getKieRuntime();
+    QuestionManager.askQuestion(Questions.CLASSIC, Answers.CLASSIC, Answers.MODERN);
+ end
+
+///
+
+rule "classic"
+    when
+        Question(getQuestion().equals(Questions.CLASSIC), getAnswer() == Answers.CLASSIC)
+    then
+            QuestionManager.askQuestion(Questions.BLACK, Answers.BLACK, Answers.COLOUR);
+end
+
+rule "modern"
+    when
+        Question(getQuestion().equals(Questions.CLASSIC), getAnswer() == Answers.MODERN)
+    then
+            QuestionManager.askQuestion(Questions.COMEDY, Answers.COMEDY, Answers.ACTION, Answers.DRAMA);
+end
+
+///
+
+rule "black"
+    when
+        Question(getQuestion().equals(Questions.BLACK), getAnswer() == Answers.BLACK)
+    then
+            QuestionManager.askQuestion(Questions.FRIENDS, Answers.FRIENDS, Answers.STRANGERS);
+end
+
+rule "colour"
+    when
+        Question(getQuestion().equals(Questions.BLACK), getAnswer() == Answers.COLOUR)
+    then
+            QuestionManager.askQuestion(Questions.NOVEL, Answers.NO_NOVEL, Answers.NOVEL);
+end
+
+///
+
+rule "comedy"
+    when
+        Question(getQuestion().equals(Questions.COMEDY), getAnswer() == Answers.COMEDY)
+    then
+            QuestionManager.askQuestion(Questions.ADVENTURES, Answers.NO_ADVENTURES, Answers.ADVENTURES);
+end
+
+rule "action"
+    when
+        Question(getQuestion().equals(Questions.COMEDY), getAnswer() == Answers.ACTION)
+    then
+            QuestionManager.askQuestion(Questions.ACTION, Answers.THRILLING, Answers.LITTLE_RISQUE);
+end
+
+rule "drama"
+    when
+        Question(getQuestion().equals(Questions.COMEDY), getAnswer() == Answers.DRAMA)
+    then
+            QuestionManager.showResult("Mr. Nobody");
+end
+
+///
+
+rule "novel"
+    when
+        Question(getQuestion().equals(Questions.NOVEL), getAnswer() == Answers.NOVEL)
+    then
+            QuestionManager.askQuestion(Questions.NEW, Answers.NEW, Answers.OLD);
+end
+
+rule "no novel"
+    when
+        Question(getQuestion().equals(Questions.NOVEL), getAnswer() == Answers.NO_NOVEL)
+    then
+            QuestionManager.askQuestion(Questions.TIME, Answers.EARLIER, Answers.TIME);
+end
+
+///
+
+rule "strangers"
+    when
+        Question(getQuestion().equals(Questions.FRIENDS), getAnswer() == Answers.STRANGERS)
+    then
+            QuestionManager.askQuestion(Questions.TOGETHER, Answers.TOGETHER, Answers.NBD);
+end
+
+rule "friends"
+    when
+        Question(getQuestion().equals(Questions.FRIENDS), getAnswer() == Answers.FRIENDS)
+    then
+            QuestionManager.showResult("Terms of Endearment");
+end
+
+///
+
+rule "twist"
+    when
+        Question(getQuestion().equals(Questions.ACTION), getAnswer() == Answers.THRILLING)
+    then
+         QuestionManager.showResult("Charlie Countryman");
+end
+
+rule "little"
+    when
+        Question(getQuestion().equals(Questions.ACTION), getAnswer() == Answers.LITTLE_RISQUE)
+    then
+        QuestionManager.askQuestion(Questions.COUPLE_COUNT, Answers.ONE, Answers.MORE);
+end
+
+///
+
+rule "new"
+    when
+        Question(getQuestion().equals(Questions.NEW), getAnswer() == Answers.NEW)
+    then
+        QuestionManager.askQuestion(Questions.US, Answers.US, Answers.MEXICO);
+end
+
+rule "old"
+    when
+        Question(getQuestion().equals(Questions.NEW), getAnswer() == Answers.OLD)
+    then
+    QuestionManager.askQuestion(Questions.AUTHOR, Answers.AUSTEN, Answers.BRONTE, Answers.RUSSIAN);
+end
+
+///
+
+rule "together"
+    when
+        Question(getQuestion().equals(Questions.TOGETHER), getAnswer() == Answers.TOGETHER)
+    then
+         QuestionManager.showResult("Breakfast at Tiffany's");
+end
+
+rule "separate"
+    when
+        Question(getQuestion().equals(Questions.TOGETHER), getAnswer() == Answers.NBD)
+    then
+        QuestionManager.showResult("Roman Holiday");
+end
+
+///
+
+rule "us"
+    when
+        Question(getQuestion().equals(Questions.US), getAnswer() == Answers.US)
+    then
+         QuestionManager.showResult("The Great Gatsby (1974)");
+end
+
+rule "mexico"
+    when
+        Question(getQuestion().equals(Questions.US), getAnswer() == Answers.MEXICO)
+    then
+        QuestionManager.showResult("Like Water for Chocolate");
+end
+
+///
+
+rule "one"
+    when
+        Question(getQuestion().equals(Questions.COUPLE_COUNT), getAnswer() == Answers.ONE)
+    then
+         QuestionManager.showResult("Perfect Sense");
+end
+
+rule "more"
+    when
+        Question(getQuestion().equals(Questions.COUPLE_COUNT), getAnswer() == Answers.MORE)
+    then
+        QuestionManager.showResult("The Little Death");
+end
+
+///
+
+rule "adventures"
+    when
+        Question(getQuestion().equals(Questions.ADVENTURES), getAnswer() == Answers.ADVENTURES)
+    then
+        QuestionManager.askQuestion(Questions.QUEST, Answers.YES, Answers.NAH);
+
+end
+
+rule "no adventures"
+    when
+        Question(getQuestion().equals(Questions.ADVENTURES), getAnswer() == Answers.NO_ADVENTURES)
+    then
+        QuestionManager.askQuestion(Questions.FISH, Answers.FISH, Answers.NO);
+end
+
+///
+
+rule "'90"
+    when
+        Question(getQuestion().equals(Questions.TIME), getAnswer() == Answers.TIME)
+    then
+        QuestionManager.askQuestion(Questions.INNOCENT, Answers.PASSION, Answers.INNOCENT);
+
+end
+
+rule "no '90"
+    when
+        Question(getQuestion().equals(Questions.TIME), getAnswer() == Answers.EARLIER)
+    then
+        QuestionManager.askQuestion(Questions.BIOGRAPHY, Answers.PASS, Answers.OK);
+end
+
+///
+
+rule "russian"
+    when
+        Question(getQuestion().equals(Questions.AUTHOR), getAnswer() == Answers.RUSSIAN)
+    then
+         QuestionManager.showResult("Anna Kerenina");
+end
+
+rule "austen"
+    when
+        Question(getQuestion().equals(Questions.AUTHOR), getAnswer() == Answers.AUSTEN)
+    then
+        QuestionManager.showResult("Mansfield Park");
+end
+
+rule "bronte"
+    when
+        Question(getQuestion().equals(Questions.AUTHOR), getAnswer() == Answers.BRONTE)
+    then
+        QuestionManager.askQuestion(Questions.LOVE_TRIANGLES, Answers.LOVE_TRIANGLES, Answers.PASS);
+end
+
+///
+
+rule "bio"
+    when
+        Question(getQuestion().equals(Questions.BIOGRAPHY), getAnswer() == Answers.PASS)
+    then
+        QuestionManager.showResult("Shakespeare in love");
+end
+
+rule "nobio"
+    when
+        Question(getQuestion().equals(Questions.BIOGRAPHY), getAnswer() == Answers.OK)
+    then
+        QuestionManager.askQuestion(Questions.ART, Answers.ART, Answers.FILM);
+end
+
+///
+
+rule "quest"
+    when
+        Question(getQuestion().equals(Questions.QUEST), getAnswer() == Answers.YES)
+    then
+        QuestionManager.askQuestion(Questions.TROPICAL, Answers.TROPICAL, Answers.WINTER);
+
+end
+
+rule "no quest"
+    when
+        Question(getQuestion().equals(Questions.QUEST), getAnswer() == Answers.NAH)
+    then
+        QuestionManager.askQuestion(Questions.CHEATERS, Answers.NO_CHEATERS, Answers.WELL);
+end
+
+///
+
+rule "tri"
+    when
+        Question(getQuestion().equals(Questions.LOVE_TRIANGLES), getAnswer() == Answers.LOVE_TRIANGLES)
+    then
+         QuestionManager.showResult("Wuthering Helghts");
+end
+
+rule "no tri"
+    when
+        Question(getQuestion().equals(Questions.LOVE_TRIANGLES), getAnswer() == Answers.PASS)
+    then
+        QuestionManager.showResult("Jane Eyre");
+end
+
+///
+
+rule "fish"
+    when
+        Question(getQuestion().equals(Questions.FISH), getAnswer() == Answers.FISH)
+    then
+        QuestionManager.askQuestion(Questions.QUEENS, Answers.YES, Answers.HUH);
+end
+
+rule "no fish"
+    when
+        Question(getQuestion().equals(Questions.FISH), getAnswer() == Answers.NO)
+    then
+        QuestionManager.askQuestion(Questions.CHRISTMAS, Answers.CHRISTMAS, Answers.NOT_SO_MUCH);
+end
+
+///
+
+rule "art"
+    when
+        Question(getQuestion().equals(Questions.ART), getAnswer() == Answers.ART)
+    then
+         QuestionManager.showResult("Frida");
+end
+
+rule "film"
+    when
+        Question(getQuestion().equals(Questions.ART), getAnswer() == Answers.FILM)
+    then
+        QuestionManager.showResult("Marilyn");
+end
+
+///
+
+rule "tropic"
+    when
+        Question(getQuestion().equals(Questions.TROPICAL), getAnswer() == Answers.TROPICAL)
+    then
+         QuestionManager.showResult("50 First Dates");
+end
+
+rule "winter"
+    when
+        Question(getQuestion().equals(Questions.TROPICAL), getAnswer() == Answers.WINTER)
+    then
+        QuestionManager.showResult("Bridget Jones's Diary");
+end
+
+///
+
+rule "queens"
+    when
+        Question(getQuestion().equals(Questions.QUEENS), getAnswer() == Answers.YES)
+    then
+         QuestionManager.showResult("Coming to America");
+end
+
+rule "no queens"
+    when
+        Question(getQuestion().equals(Questions.TROPICAL), getAnswer() == Answers.HUH)
+    then
+        QuestionManager.showResult("Spanglish");
+end
+
+///
+
+rule "passion"
+    when
+        Question(getQuestion().equals(Questions.INNOCENT), getAnswer() == Answers.PASSION)
+    then
+        QuestionManager.askQuestion(Questions.GHOSTS, Answers.GHOSTS, Answers.NO);
+end
+
+rule "innocent"
+    when
+        Question(getQuestion().equals(Questions.INNOCENT), getAnswer() == Answers.INNOCENT)
+    then
+        QuestionManager.askQuestion(Questions.CITY, Answers.CITY, Answers.TOWN);
+end
+
+///
+
+rule "ghost"
+    when
+        Question(getQuestion().equals(Questions.GHOSTS), getAnswer() == Answers.GHOSTS)
+    then
+         QuestionManager.showResult("Ghost");
+end
+
+rule "no ghost"
+    when
+        Question(getQuestion().equals(Questions.GHOSTS), getAnswer() == Answers.NO)
+    then
+        QuestionManager.showResult("Jerry Maguire");
+end
+
+///
+
+rule "cheat"
+    when
+        Question(getQuestion().equals(Questions.CHEATERS), getAnswer() == Answers.NO_CHEATERS)
+    then
+        QuestionManager.askQuestion(Questions.NOTE, Answers.YES, Answers.NO);
+end
+
+rule "no cheat"
+    when
+        Question(getQuestion().equals(Questions.CHEATERS), getAnswer() == Answers.WELL)
+    then
+        QuestionManager.askQuestion(Questions.PROPOSE, Answers.PROPOSE, Answers.NOPE);
+end
+
+///
+
+rule "christmas"
+    when
+        Question(getQuestion().equals(Questions.CHRISTMAS), getAnswer() == Answers.CHRISTMAS)
+    then
+        QuestionManager.askQuestion(Questions.SINGLE, Answers.DATING, Answers.SURE);
+end
+
+rule "no christmas"
+    when
+        Question(getQuestion().equals(Questions.CHRISTMAS), getAnswer() == Answers.NOT_SO_MUCH)
+    then
+        QuestionManager.askQuestion(Questions.JENN, Answers.LOPEZ, Answers.GARNER);
+end
+
+///
+
+rule "note"
+    when
+        Question(getQuestion().equals(Questions.NOTE), getAnswer() == Answers.YES)
+    then
+         QuestionManager.showResult("The Love Letter");
+end
+
+rule "no note"
+    when
+        Question(getQuestion().equals(Questions.NOTE), getAnswer() == Answers.NO)
+    then
+        QuestionManager.showResult("Serendipity");
+end
+
+///
+
+rule "lopez"
+    when
+        Question(getQuestion().equals(Questions.JENN), getAnswer() == Answers.LOPEZ)
+    then
+         QuestionManager.showResult("Maid in Manhattan");
+end
+
+rule "gamer"
+    when
+        Question(getQuestion().equals(Questions.JENN), getAnswer() == Answers.GARNER)
+    then
+        QuestionManager.showResult("13 going on 30");
+end
+
+///
+
+rule "city"
+    when
+        Question(getQuestion().equals(Questions.CITY), getAnswer() == Answers.CITY)
+    then
+        QuestionManager.showResult("Clueless");
+end
+
+rule "town"
+    when
+        Question(getQuestion().equals(Questions.CITY), getAnswer() == Answers.TOWN)
+    then
+        QuestionManager.askQuestion(Questions.LASTS, Answers.CHASE, Answers.FOREVER);
+end
+
+///
+
+rule "single"
+    when
+        Question(getQuestion().equals(Questions.SINGLE), getAnswer() == Answers.SURE)
+    then
+        QuestionManager.showResult("Marry Me for Christmas");
+end
+
+rule "dating"
+    when
+        Question(getQuestion().equals(Questions.SINGLE), getAnswer() == Answers.DATING)
+    then
+        QuestionManager.askQuestion(Questions.GROUNDHOG, Answers.OK, Answers.NO_THANKS);
+end
+
+///
+
+
+
+rule "propose"
+    when
+        Question(getQuestion().equals(Questions.PROPOSE), getAnswer() == Answers.PROPOSE)
+    then
+        QuestionManager.showResult("My BEst Friend's Wedding");
+end
+
+rule "np propose"
+    when
+        Question(getQuestion().equals(Questions.PROPOSE), getAnswer() == Answers.NOPE)
+    then
+        QuestionManager.askQuestion(Questions.BEER, Answers.YES, Answers.NOPE);
+end
+
+///
+
+rule "forever"
+    when
+        Question(getQuestion().equals(Questions.LASTS), getAnswer() == Answers.FOREVER)
+    then
+         QuestionManager.showResult("Forrest Gump");
+end
+
+rule "no forever"
+    when
+        Question(getQuestion().equals(Questions.LASTS), getAnswer() == Answers.CHASE)
+    then
+        QuestionManager.showResult("What's Eating Gilbert Grape?");
+end
+
+///
+
+rule "groundhog"
+    when
+        Question(getQuestion().equals(Questions.GROUNDHOG), getAnswer() == Answers.OK)
+    then
+         QuestionManager.showResult("12 Dates of Christmas");
+end
+
+rule "no groundhog"
+    when
+        Question(getQuestion().equals(Questions.GROUNDHOG), getAnswer() == Answers.NO_THANKS)
+    then
+        QuestionManager.showResult("Love Actually");
+end
+
+///
+
+
+
+rule "beer"
+    when
+        Question(getQuestion().equals(Questions.BEER), getAnswer() == Answers.YES)
+    then
+         QuestionManager.showResult("Drinking Buddies");
+end
+
+rule "no beer"
+    when
+        Question(getQuestion().equals(Questions.BEER), getAnswer() == Answers.NOPE)
+    then
+        QuestionManager.showResult("Leap Year");
+end
+
+///

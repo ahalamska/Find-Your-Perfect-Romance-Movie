@@ -1,0 +1,70 @@
+package si.movie;
+
+public enum Answers {
+    CLASSIC("I need an escape from Tinder."),
+    MODERN("I'a a modern girl."),
+    BLACK("Definitely love oldies!"),
+    COLOUR("Let's go more modern."),
+    COMEDY("I need a laugh."),
+    DRAMA("Let's add some drama."),
+    ACTION("How about some action?"),
+    NOVEL("I'm kind of a book worm."),
+    NO_NOVEL("Not so much"),
+    FRIENDS("Friends."),
+    STRANGERS("Strangers."),
+    THRILLING("A thrilling twist!"),
+    LITTLE_RISQUE("Love a little risque!"),
+    NEW("New."),
+    OLD("Old."),
+    TOGETHER("Please say yes!"),
+    NBD("NBD."),
+    US("U.S."),
+    MEXICO("Viva Mexico!"),
+    ONE("One."),
+    MORE("The more, the merrier!"),
+    EARLIER("Let's go earlier."),
+    TIME("Greatest years of my life."),
+    NO_ADVENTURES("Prefer a different storyline."),
+    ADVENTURES("Who doesn't!?"),
+    RUSSIAN("I prefer Russian literature"),
+    BRONTE("Emily Bronte is my queen"),
+    AUSTEN("Jane Austen all the way"),
+    PASS("Pass."),
+    OK("Ok!"),
+    YES("Yes."),
+    NAH("Nah."),
+    ART("Art!"),
+    FILM("Film!"),
+    LOVE_TRIANGLES("I LOVE love triangles."),
+    FISH("Ooo... tell me more!"),
+    NO("No."),
+    TROPICAL("Dreaming of Hawaii"),
+    WINTER("I'm fan of winter."),
+    HUH("Huh?"),
+    INNOCENT("Innocent love?"),
+    PASSION("Deep passion!"),
+    NO_CHEATERS("No to cheaters!"),
+    WELL("Well..."),
+    GHOSTS("Bring it!"),
+    CHRISTMAS("Bring ont the mistletoe!"),
+    NOT_SO_MUCH("Not so much."),
+    LOPEZ("Lopez!"),
+    GARNER("Garner!"),
+    CITY("Big city"),
+    TOWN("Small town."),
+    DATING("I prefer dating"),
+    SURE("sure!"),
+    PROPOSE("Umm... he already did??"),
+    NOPE("Nope."),
+    CHASE("Let's cut to the chase"),
+    FOREVER("Love should last forever!"),
+    NO_THANKS("No thanks.");
+    private String value;
+
+    Answers(String s) {
+        value = s;
+    }
+    public String getValue(){
+        return value;
+    }
+}
